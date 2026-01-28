@@ -1,0 +1,173 @@
+# 帮我生产一份.gitignore支持vue,react,uniapp,python,fastapi,springboot,nestjs,nuxtjs,c#,android_java,c,c++,go的文件
+
+# 自定义忽略==============================
+# ai数字人SadTalker的模型包
+gfpgan
+checkpoints
+results
+
+# electron忽略的文件夹
+.pnpm-store
+dist_vue
+dist_electron
+dist_electron_win
+
+
+
+# 环境变量==============================
+# .env
+# .env.*
+# env/
+# .env/
+# bin/
+
+
+# ==============================
+# 通用忽略规则
+dist/
+build/
+
+
+
+
+# ==============================
+# 系统文件
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+*.log
+*.tmp
+*.bak
+.idea/
+.vscode/
+*.code-workspace
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+!.env.example
+
+
+# ==============================
+# Vue / React / NuxtJS / NestJS
+# ==============================
+# 构建产物
+.out/
+.nuxt/
+.output/
+# 测试/缓存
+coverage/
+.jest-cache/
+.eslintcache
+.prettiercache
+
+
+# ==============================
+# Uniapp
+# ==============================
+unpackage/
+pages.json.temp
+wxcomponents/
+uni_modules/.cache/
+
+
+# ==============================
+# Python / FastAPI
+# ==============================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+# 虚拟环境
+venv/
+# 依赖/构建
+*.egg-info/
+# 测试/缓存
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+coverage.xml
+htmlcov/
+
+
+# ==============================
+# SpringBoot
+# ==============================
+# 构建产物
+target/
+# IDE缓存
+*.iml
+*.iws
+*.ipr
+.gradle/
+# 日志/配置
+*.log
+*.properties
+!.gitignore
+!.README.md
+
+
+# ==============================
+# C#
+# ==============================
+obj/
+*.user
+*.suo
+*.cache
+*.sln.docstates
+# 发布产物
+publish/
+
+
+# ==============================
+# Android (Java)
+# ==============================
+.gradle/
+local.properties
+
+captures/
+*.iml
+# Android Studio
+.idea/
+.navigation/
+*.log
+# 签名文件
+*.jks
+*.keystore
+
+
+# ==============================
+# C / C++
+# ==============================
+# 编译产物
+*.o
+*.obj
+*.exe
+*.out
+*.so
+*.dll
+*.dylib
+# 构建目录
+cmake-build-*/
+# 调试文件
+*.dSYM/
+*.pdb
+
+
+# ==============================
+# Go
+# ==============================
+# 编译产物
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+# 模块缓存
+go.sum
+go.mod
+# 构建目录
+pkg/
