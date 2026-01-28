@@ -1,16 +1,15 @@
 # 第一步 SadTalker
-我当前使用的环境是 conda 的 p310_test4 , 激活环境 conda activate p310_test4
-安装依赖包                      pip install -r requirements.txt   
-启动脚本    webui.bat
- pip list | findstr /i   "pyyaml"
+启动脚本                webui.bat
+等待启动打开webui        http://127.0.0.1:7860
+
 
 
 
 # 注意事项
-纯净的环境                      创建环境  conda create -n p310_test4 python=3.10  -y    激活环境 conda activate p310_test4
+官网                            https://github.com/OpenTalker/SadTalker
+纯净的环境                      创建环境  conda create -n p310_test5 python=3.10  -y    激活环境 conda activate p310_test5
 镜像源尽量使原生的pypi           pip config set global.index-url https://pypi.org/simple
 要指定版本gradio==3.50.0        pip install -r requirements.txt   
-
 ffmpeg添加到path环境变量中       C:\Users\Administrator\Desktop\ffmpeg-2024-09-09-git-9556379943-full_build\bin
 添加模型文件gfpgan              已经上传到百度云盘中了   需要放到项目的跟目录中
 添加模型文件checkpoints         已经上传到百度云盘中了   需要放到项目的跟目录中
