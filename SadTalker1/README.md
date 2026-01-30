@@ -14,7 +14,7 @@ ffmpeg添加到path环境变量中       C:\Users\Administrator\Desktop\ffmpeg-2
 添加模型文件gfpgan              已经上传到百度云盘中了   需要放到项目的跟目录中
 添加模型文件checkpoints         已经上传到百度云盘中了   需要放到项目的跟目录中
 项目中的examples提供了图片和音频
-手动安装ffmpeg                  conda install ffmpeg
+手动安装ffmpeg                  conda install ffmpeg -y
 手动安装torch                   pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
 
 
