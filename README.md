@@ -1,6 +1,7 @@
-sadtalker livetalking wav2lip Heygem
+
 
 # 数字人 ==============================================================
+# sadtalker livetalking wav2lip Heygem infinitetalk MuseTalk
 ## sadtalker
 官网     https://github.com/OpenTalker/SadTalker
 视频     https://www.bilibili.com/video/BV1s1421m7Wy
@@ -21,14 +22,16 @@ https://github.com/TMElyralab/MuseTalk
 视频     https://www.bilibili.com/video/BV1xrMyz6Esz
 
 ## Sonic
+https://github.com/jixiaozhong/Sonic
 https://www.bilibili.com/video/BV15tCcBPEg7
 
 ## Heygem-Avatar
 官网      https://github.com/duixcom/Duix-Avatar
+https://www.bilibili.com/video/BV1ZgovYGE3u  十字鱼成功整合包
 https://www.bilibili.com/video/BV1DmdaYxEbH
 https://www.bilibili.com/video/BV1TuXuYVETd
 
-
+https://comate.baidu.com/zh/page/s6groivjdua
 # 声音克隆 ==============================================================
 index-tts2    cosyvoice
 ## index-tts2
