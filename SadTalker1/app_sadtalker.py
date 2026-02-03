@@ -1,6 +1,106 @@
-import os, sys
+import os, sys, gradio
 import gradio as gr
-from src.gradio_demo import SadTalker  
+from src.gradio_demo import SadTalker
+
+# 抑制 asyncio 连接关闭异常
+import asyncio
+import logging
+import threading
+import io
+import contextlib
+import time
+import traceback
+import ctypes
+
+# 设置日志级别以减少噪声
+logging.getLogger('asyncio').setLevel(logging.WARNING)
+logging.getLogger('asyncio.coroutines').setLevel(logging.WARNING)
+
+# 全局异常处理器 - 抑制 ConnectionResetError
+_original_excepthook = sys.excepthook
+_connection_errors_ignored = False
+
+def _custom_excepthook(exc_type, exc_value, exc_traceback):
+    """自定义异常处理器，忽略特定的网络连接错误"""
+    # 忽略 ConnectionResetError 及其相关异常
+    if issubclass(exc_type, (ConnectionResetError, ConnectionAbortedError, ConnectionRefusedError, BrokenPipeError)):
+        global _connection_errors_ignored
+        if not _connection_errors_ignored:
+            _connection_errors_ignored = True
+        return
+    # 忽略 asyncio 的 ProactorBasePipeTransport 相关异常
+    if 'ProactorBasePipeTransport' in str(exc_type) or '_ProactorBasePipeTransport' in str(exc_type):
+        return
+    # 其他异常正常处理
+    return _original_excepthook(exc_type, exc_value, exc_traceback)
+
+# 应用自定义异常处理器
+sys.excepthook = _custom_excepthook
+
+# 针对 Windows 的 ProactorEventLoop 特殊处理
+if sys.platform == 'win32':
+    # 抑制 Windows 上 asyncio 的连接关闭异常
+    import warnings
+    warnings.filterwarnings('ignore', category=ResourceWarning)
+
+# 创建自定义日志处理器来过滤 ConnectionResetError 异常
+class ConnectionErrorFilter(logging.Filter):
+    def filter(self, record):
+        msg = record.getMessage()
+        # 过滤包含这些关键词的日志消息
+        filter_keywords = [
+            'ProactorBasePipeTransport',
+            '_ProactorBasePipeTransport',
+            'ConnectionResetError',
+            'call_connection_lost',
+            '_call_connection_lost'
+        ]
+        for keyword in filter_keywords:
+            if keyword in msg:
+                return False
+        return True
+
+# 添加过滤器到 asyncio 日志处理器
+asyncio_logger = logging.getLogger('asyncio')
+asyncio_logger.addFilter(ConnectionErrorFilter())
+
+# 线程异常处理
+def handle_thread_exception(args):
+    """处理线程中的异常"""
+    if isinstance(args, tuple) and len(args) >= 3:
+        exc_type, exc_value, exc_traceback = args[0], args[1], args[2]
+        if isinstance(exc_value, (ConnectionResetError, ConnectionAbortedError, ConnectionRefusedError, BrokenPipeError)):
+            return True
+        if 'ProactorBasePipeTransport' in str(exc_type):
+            return True
+    return False
+
+# 设置线程异常钩子 - 使用 Python 3.8+ 的新方法
+def install_thread_excepthook():
+    """安装线程异常钩子 - Python 3.8+"""
+    try:
+        # Python 3.8+ 使用 sys.unraisablehook
+        _original_unraisablehook = sys.unraisablehook
+        
+        def custom_unraisablehook(unraisable):
+            exc_type = unraisable.exc_type
+            exc_value = unraisable.exc_value
+            # 忽略连接相关异常
+            if isinstance(exc_value, (ConnectionResetError, ConnectionAbortedError, ConnectionRefusedError, BrokenPipeError)):
+                return
+            if 'ProactorBasePipeTransport' in str(exc_type):
+                return
+            # 其他异常正常处理
+            return _original_unraisablehook(unraisable)
+        
+        sys.unraisablehook = custom_unraisablehook
+    except AttributeError:
+        pass
+
+try:
+    install_thread_excepthook()
+except:
+    pass  
 
 
 try:
@@ -106,6 +206,14 @@ if __name__ == "__main__":
 
     demo = sadtalker_demo()
     demo.queue()
-    demo.launch()
+
+    # 启动 Gradio 服务器，优化连接配置
+    demo.launch(
+        server_name="127.0.0.1",
+        server_port=7860,
+        show_error=True,
+        # 禁用自动重新连接提示
+        quiet=True
+    )
 
 

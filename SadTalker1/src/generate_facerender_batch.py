@@ -9,6 +9,12 @@ def get_facerender_data(coeff_path, pic_path, first_coeff_path, audio_path,
                         batch_size, input_yaw_list=None, input_pitch_list=None, input_roll_list=None, 
                         expression_scale=1.0, still_mode = False, preprocess='crop', size = 256):
 
+    # 确保 batch_size 至少为1，避免除零错误
+    if batch_size is None or not isinstance(batch_size, (int, float)) or batch_size <= 0:
+        batch_size = 1
+    else:
+        batch_size = int(batch_size)
+
     semantic_radius = 13
     video_name = os.path.splitext(os.path.split(coeff_path)[-1])[0]
     txt_path = os.path.splitext(coeff_path)[0]
@@ -98,6 +104,12 @@ def transform_semantic_target(coeff_3dmm, frame_index, semantic_radius):
     return coeff_3dmm_g.transpose(1,0)
 
 def gen_camera_pose(camera_degree_list, frame_num, batch_size):
+
+    # 确保 batch_size 至少为1，避免除零错误
+    if batch_size is None or not isinstance(batch_size, (int, float)) or batch_size <= 0:
+        batch_size = 1
+    else:
+        batch_size = int(batch_size)
 
     new_degree_list = [] 
     if len(camera_degree_list) == 1:
