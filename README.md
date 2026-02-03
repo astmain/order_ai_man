@@ -15,6 +15,11 @@ https://github.com/MeiGen-AI/InfiniteTalk
 https://github.com/TMElyralab/MuseTalk
 
 
+LongCat-Video
+LongCat-Video-Avatar
+
+
+
 
 
 ## livetalking
